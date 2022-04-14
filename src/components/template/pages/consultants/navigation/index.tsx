@@ -4,6 +4,9 @@ import {
   NavigationInput,
   NavigationUl,
   NavigationLi,
+  NavigationChatIcon,
+  NavigationBellIcon,
+  NavigationBellDiv
 } from "./styles";
 
 // import { Container } from './styles';
@@ -40,8 +43,8 @@ const Navigation: React.FC = () => {
         </div>
         <div className="w-1/2 hidden lg:flex">
           <div className="w-full flex items-center pl-8 justify-end">
-            <div className="h-full w-20 flex items-center justify-center border-r border-l">
-              <div className="relative cursor-pointer text-gray-600">
+            <NavigationBellDiv>
+              <NavigationBellIcon>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="icon icon-tabler icon-tabler-bell"
@@ -59,9 +62,9 @@ const Navigation: React.FC = () => {
                   <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                 </svg>
                 <div className="w-2 h-2 rounded-full bg-red-400 border border-white absolute inset-0 mt-1 mr-1 m-auto" />
-              </div>
-            </div>
-            <div className="h-full w-20 flex items-center justify-center border-r mr-4 cursor-pointer text-gray-600">
+              </NavigationBellIcon>
+            </NavigationBellDiv>
+            <NavigationChatIcon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="icon icon-tabler icon-tabler-messages"
@@ -78,7 +81,7 @@ const Navigation: React.FC = () => {
                 <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
                 <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
               </svg>
-            </div>
+            </NavigationChatIcon>
             <div
               className="flex items-center relative cursor-pointer"
               onClick={() => setProfile(!profile)}
