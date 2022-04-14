@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/pages/painel/index.js", "src/pages/painel/consultor/index.js"  ],
+, "src/pages/painel/index.js", "src/pages/painel/consultants/index.js"  ],
   "exclude": [
     "node_modules"
   ]
