@@ -13,8 +13,8 @@ import Modal_Password from '../../../../components/molecules/modals/modal_passwo
 
 const ferraments: React.FC = () => {
   
-  const [modalInvitie, setModalInvitie] = useState<Boolean>(false);
-  const [modalPassword, setModalPassword] = useState<Boolean>(false)
+  const [modalInvitie, setModalInvitie] = useState<boolean>(false);
+  const [modalPassword, setModalPassword] = useState<boolean>(false)
 
   return (
     <>
