@@ -1,49 +1,56 @@
-// import React from "react";
+import React from "react";
 
-// import {
-//   Auth_Container,
-//   Auth_Container_Wrapper,
-//   Auth_Form_Wrapper,
-//   Form_Action,
-//   Form_Label,
-//   Form_Input,
-//   Logo,
-//   Logo_Wrapper,
-//   Button_Form,
-// } from "../../../components/templates/pages/Auth";
+import { useForm } from "react-hook-form";
 
-// import Router from "next/router";
+import Router from "next/router";
 
-// const PageAuth: React.FC = () => {
-//   const HandleSubmitForm = () => {
-//     Router.push("painel/consultor");
-//   };
+const LoginPage: React.FC = () => {
+  const { register, handleSubmit } = useForm();
 
-//   return (
-//     <Auth_Container>
-//       <Auth_Container_Wrapper>
-//         <Logo_Wrapper>
-//           <Logo src="img/logo.png" alt="Logo Trading Service" />
-//         </Logo_Wrapper>
-//         <Auth_Form_Wrapper>
-//           <Form_Action>
-//             <div className="mt-6">
-//               <Form_Label>E-mail</Form_Label>
-//               <Form_Input type="text" name="email" required />
-//             </div>
-//             <div className="mt-6">
-//               <Form_Label>Senha</Form_Label>
-//               <Form_Input type="password" name="password" required />
-//             </div>
+  const onSubmit = (data) => {
+    Router.replace("/painel/consultant");
+  };
 
-//             <div className="mt-6">
-//               <Button_Form onClick={HandleSubmitForm}>Entrar</Button_Form>
-//             </div>
-//           </Form_Action>
-//         </Auth_Form_Wrapper>
-//       </Auth_Container_Wrapper>
-//     </Auth_Container>
-//   );
-// };
+  return (
+    <>
+      <div className="min-h-screen bg-blue-900 flex flex-col justify-center items-center">
+        <img src="/img/logo.png" alt="logo" />
+        <div className="max-w-md w-full mx-auto mt-4 bg-white p-8 border border-gray-300 rounded">
+          <form
+            action=""
+            className="space-y-6"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <label htmlFor="" className="text-sm font-bold text-gray-600 block">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+              required
+              {...register("Email")}
+            />
 
-// export default PageAuth;
+            <label htmlFor="" className="text-sm font-bold text-gray-600 block">
+              Senha
+            </label>
+            <input
+              type="password"
+              name="password"
+              className="w-full p-2 border border-gray-300 rounded mt-1"
+              required
+              {...register("Password")}
+            />
+
+            <button className="w-full py-2 px-4 bg-blue-900 hover:bg-blue-800 rounded-md text-white text-sm">
+              Entrar
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default LoginPage;

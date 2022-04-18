@@ -10,13 +10,17 @@
   "dependencies": {
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
+    "@material-tailwind/react": "0.3.4",
     "@windmill/react-ui": "^0.6.0",
     "browserslist": "^4.20.2",
     "framer-motion": "^2.9.5",
+    "headlessui": "^0.0.0",
     "next": "10.0.3",
     "react": "17.0.1",
     "react-chartjs-2": "^4.1.0",
     "react-dom": "17.0.1",
+    "react-hook-form": "^7.29.0",
+    "react-icons": "^4.3.1",
     "styled-components": "^5.3.5",
     "tailwind-styled-components": "^2.1.6"
   },
