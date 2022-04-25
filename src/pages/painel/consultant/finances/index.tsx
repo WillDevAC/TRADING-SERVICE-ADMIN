@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import LayoutFragment from "../../../../components/layout";
-import Card_Relatory from "../../../../components/templates/finances/card";
+import LayoutFragment from "../../../../components/layout/consultant";
+import Card_Relatory from "../../../../components/templates/consultant/finances/card";
 
 import TableFooter from "../../../../components/molecules/table/footer";
 

@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 
-import LayoutFragment from "../../../../components/layout/consultant";
+import LayoutFragment from "../../../../components/layout/admin";
 
 import TableFooter from "../../../../components/molecules/table/footer";
 import TableHeader from "../../../../components/molecules/table/header";
 
-import ModalProfile from '../../../../components/molecules/modals/modal_viewInvestor'
-
-import Router from 'next/router'
+import Router from "next/router";
 
 import {
   Table,
@@ -22,16 +20,17 @@ import {
   TableHead,
   TableBody,
   Button,
+  WithdrawButton,
 } from "../../../../components/molecules/table/global";
 
 const Investors: React.FC = () => {
-
-  const [modal, setModal] = useState<boolean>(false);
-
   return (
-    <LayoutFragment title="Meus investidores" isBreadcrumb={true} isBack={true}>
+    <LayoutFragment
+      title="Lista de consultores"
+      isBreadcrumb={true}
+      isBack={true}
+    >
       <TableHeader />
-
       <Wrapper>
         <Table>
           <TableWrapper>
@@ -40,20 +39,23 @@ const Investors: React.FC = () => {
                 <TableResponsive>
                   <TableHead>
                     <Row>
-                      <ColumnTh scope="col">Nome do investidor</ColumnTh>
-                      <ColumnTh scope="col">Patrimonio</ColumnTh>
-                      <ColumnTh scope="col">Rendimento (Mensal)</ColumnTh>
+                      <ColumnTh scope="col">Nome</ColumnTh>
+                      <ColumnTh scope="col">Carteira</ColumnTh>
+                      <ColumnTh scope="col">Comissão</ColumnTh>
+                      <ColumnTh scope="col">Saques</ColumnTh>
+                      <ColumnTh scope="col">Convidados</ColumnTh>
                       <ColumnTh scope="col">Ações</ColumnTh>
                     </Row>
                   </TableHead>
                   <TableBody>
                     <Row>
-                      <ColumnTd>JOSE RIBAMAR DA ROCHA</ColumnTd>
+                      <ColumnTd>JOSE SANTOS DA ROCHA</ColumnTd>
                       <ColumnTd>R$ 0.00</ColumnTd>
-                      <ColumnTd>0.5%</ColumnTd>
+                      <ColumnTd>R$ 0.00</ColumnTd>
+                      <ColumnTd>0</ColumnTd>
+                      <ColumnTd>0</ColumnTd>
                       <ColumnTd>
-                        <Button onClick={() => setModal(true)}>Detalhes</Button>
-                        <Button onClick={() => Router.push('extract-investor')}>Extrato</Button>
+                        <Button onClick={() => Router.push('details-consultant')}>Ver detalhes</Button>
                       </ColumnTd>
                     </Row>
                   </TableBody>
@@ -64,8 +66,6 @@ const Investors: React.FC = () => {
         </Table>
 
         <TableFooter />
-
-        <ModalProfile modal={modal} setModal={setModal}/>
       </Wrapper>
     </LayoutFragment>
   );

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 
-import LayoutFragment from "../../../../components/layout/consultant";
+import LayoutFragment from "../../../../components/layout/admin";
 
 import TableFooter from "../../../../components/molecules/table/footer";
 import TableHeader from "../../../../components/molecules/table/header";
 
-import ModalProfile from '../../../../components/molecules/modals/modal_viewInvestor'
+import ModalViewInvestor from "../../../../components/molecules/modals/modal_viewInvestor";
+import ModalEditInvestor from "../../../../components/molecules/modals/modal_editInvestor";
 
-import Router from 'next/router'
+import Router from "next/router";
 
 import {
   Table,
@@ -25,11 +26,15 @@ import {
 } from "../../../../components/molecules/table/global";
 
 const Investors: React.FC = () => {
-
-  const [modal, setModal] = useState<boolean>(false);
+  const [modalView, setModalView] = useState<boolean>(false);
+  const [modalEdit, setModalEdit] = useState<boolean>(false);
 
   return (
-    <LayoutFragment title="Meus investidores" isBreadcrumb={true} isBack={true}>
+    <LayoutFragment
+      title="Lista de investidores"
+      isBreadcrumb={true}
+      isBack={true}
+    >
       <TableHeader />
 
       <Wrapper>
@@ -52,8 +57,15 @@ const Investors: React.FC = () => {
                       <ColumnTd>R$ 0.00</ColumnTd>
                       <ColumnTd>0.5%</ColumnTd>
                       <ColumnTd>
-                        <Button onClick={() => setModal(true)}>Detalhes</Button>
-                        <Button onClick={() => Router.push('extract-investor')}>Extrato</Button>
+                        <Button onClick={() => setModalView(true)}>
+                          Detalhes
+                        </Button>
+                        <Button onClick={() => Router.push("extract-investor")}>
+                          Extrato
+                        </Button>
+                        <Button onClick={() => setModalEdit(true)}>
+                          Editar
+                        </Button>
                       </ColumnTd>
                     </Row>
                   </TableBody>
@@ -65,7 +77,8 @@ const Investors: React.FC = () => {
 
         <TableFooter />
 
-        <ModalProfile modal={modal} setModal={setModal}/>
+        <ModalViewInvestor modal={modalView} setModal={setModalView} />
+        <ModalEditInvestor modal={modalEdit} setModal={setModalEdit} />
       </Wrapper>
     </LayoutFragment>
   );

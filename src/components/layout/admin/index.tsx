@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import SidebarMobile from "../../components/molecules/sidebar/mobile";
-import SidebarDesktop from "../../components/molecules/sidebar/desktop";
-import Breadcrumbs from "../../components/molecules/breadcrumbs";
+import SidebarMobile from "../../molecules/sidebar_admin/mobile";
+import SidebarDesktop from "../../molecules/sidebar_admin/desktop";
+import Breadcrumbs from "../../molecules/breadcrumbs";
 
-import Header from "../molecules/header";
+import Header from "../../molecules/header";
 
 interface IProps {
   title: string;
@@ -17,7 +17,7 @@ import Router from "next/router";
 
 import { MdOutlineArrowBack } from "react-icons/md";
 
-const layout: React.FC<IProps> = ({
+const layout_admin: React.FC<IProps> = ({
   children,
   title,
   isBreadcrumb,
@@ -58,4 +58,4 @@ const layout: React.FC<IProps> = ({
   );
 };
 
-export default layout;
+export default layout_admin;

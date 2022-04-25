@@ -18,7 +18,7 @@ interface IProps {
   setModal: Function;
 }
 
-const modal_user: React.FC<IProps> = ({ modal, setModal }) => {
+const modal_editInvestor: React.FC<IProps> = ({ modal, setModal }) => {
   return (
     <>
       {modal == true && (
@@ -70,4 +70,4 @@ const modal_user: React.FC<IProps> = ({ modal, setModal }) => {
   );
 };
 
-export default modal_user;
+export default modal_editInvestor;

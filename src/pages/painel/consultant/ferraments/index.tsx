@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-import LayoutFragment from "../../../../components/layout";
+import LayoutFragment from "../../../../components/layout/consultant";
 
 import { AiOutlineLink } from "react-icons/ai";
 import { Si1Password } from "react-icons/si";
 import { FaHandsHelping } from "react-icons/fa";
 
-import { Ferrament } from "../../../../components/templates/ferraments/global";
+import { Ferrament } from "../../../../components/templates/consultant/ferraments/global";
 
 import Modal_Invitie from '../../../../components/molecules/modals/modal_invitie'
 import Modal_Password from '../../../../components/molecules/modals/modal_password'
