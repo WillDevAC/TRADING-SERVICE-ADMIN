@@ -20,7 +20,7 @@ import TableFooter from "../../../../components/molecules/table/footer";
 
 import CardDetails from '../../../../components/molecules/cards';
 
-import LayoutFragment from "../../../../components/layout/consultant";
+import LayoutFragment from "../../../../components/layout/admin";
 
 const extract: React.FC = () => {
   return (
