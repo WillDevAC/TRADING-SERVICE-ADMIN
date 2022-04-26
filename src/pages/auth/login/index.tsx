@@ -1,14 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
-
+import { api } from "../../../services/api";
 import Router from "next/router";
-
+import { toast } from "react-nextjs-toast";
+import dayjs from "dayjs";
 const LoginPage: React.FC = () => {
   const { register, handleSubmit } = useForm();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const onSubmit = (data) => {
-    Router.replace("/painel/consultant");
+  const onSubmit = async (data) => {
+    if (loading) return;
+    setLoading(true);
+    const response = await api.post("/consultant/signin", {
+      ...data,
+    });
+    if (!!response.data?.message) {
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    } else {
+      localStorage.setItem("@token", response?.data?.accessToken);
+      localStorage.setItem(
+        "@timestampToken",
+        dayjs(new Date()).toDate().toString()
+      );
+      localStorage.setItem(
+        "@typeUser",
+        !!response.data.user.isMaster ? "admin" : "consultant"
+      );
+      localStorage.setItem("@userId", response.data.user.id);
+      Router.replace(
+        `/painel/${!!response.data.user.isMaster ? "admin" : "consultant"}`
+      );
+    }
+    setLoading(false);
   };
 
   return (
@@ -29,7 +55,7 @@ const LoginPage: React.FC = () => {
               name="email"
               className="w-full p-2 border border-gray-300 rounded mt-1"
               required
-              {...register("Email")}
+              {...register("email")}
             />
 
             <label htmlFor="" className="text-sm font-bold text-gray-600 block">
@@ -40,7 +66,7 @@ const LoginPage: React.FC = () => {
               name="password"
               className="w-full p-2 border border-gray-300 rounded mt-1"
               required
-              {...register("Password")}
+              {...register("password")}
             />
 
             <button className="w-full py-2 px-4 bg-blue-900 hover:bg-blue-800 rounded-md text-white text-sm">
@@ -49,6 +75,7 @@ const LoginPage: React.FC = () => {
           </form>
         </div>
       </div>
+      <div className={loading ? "loader" : ""} />
     </>
   );
 };
