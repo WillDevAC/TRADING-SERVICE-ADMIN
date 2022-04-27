@@ -1,15 +1,15 @@
 import tw from "tailwind-styled-components/dist/tailwind";
 
 export const ChatWrapper = tw.div `
-  container mx-auto
+  container mx-auto 
 `;
 
 export const ChatContainer = tw.div `
-  min-w-full border rounded lg:grid lg:grid-cols-3
+  min-w-full border rounded lg:grid lg:grid-cols-3 h-600
 `;
 
 export const ChatListContainer = tw.div `
-  border-r border-gray-300 lg:col-span-1
+  border-r border-gray-300 lg:col-span-1 overflow-auto
 `;
 
 export const ChatSearchIcon = tw.span `
@@ -45,7 +45,7 @@ export const GreenBall = tw.span `
 `;
 
 export const ChatMessages = tw.div `
-  relative w-full p-6 overflow-y-auto h-[40rem]
+  relative w-full p-6 overflow-y-auto h-[40rem] h-full
 `;
 
 export const MessageLeft = tw.div `

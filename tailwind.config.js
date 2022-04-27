@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', 'ui-sans-serif']
+      },
+      height: {
+        '600': '600px',
       }
     }
   },
