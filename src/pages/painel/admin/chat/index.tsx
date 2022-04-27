@@ -30,7 +30,7 @@ interface Datum {
   id: string;
   profilepic: string;
   lastmsg: string;
-  time: string;
+  time: number;
   messages: Message[];
 }
 
