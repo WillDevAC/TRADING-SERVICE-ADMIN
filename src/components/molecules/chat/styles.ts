@@ -36,10 +36,6 @@ export const ChatTalk = tw.div `
   hidden lg:col-span-2 lg:block
 `;
 
-export const ChatTalkProfile = tw.div `
-  relative flex items-center p-3 border-b border-gray-300
-`;
-
 export const GreenBall = tw.span `
   absolute w-3 h-3 bg-green-600 rounded-full left-10 top-3  
 `;
@@ -54,10 +50,6 @@ export const MessageLeft = tw.div `
 
 export const MessageRight = tw.div `
   relative max-w-xl px-4 py-2 text-gray-700 bg-gray-100 rounded shadow
-`;
-
-export const ChatInputContainer = tw.div `
-  flex items-center justify-between w-full p-3 border-t border-gray-300
 `;
 
 export const ChatInput = tw.input `
