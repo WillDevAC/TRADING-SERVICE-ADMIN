@@ -3,7 +3,7 @@ import React from "react";
 import {
   MessageLeft,
   MessageRight,
-} from "../../../../../../components/molecules/chat/styles";
+} from "../../molecules/chat/styles";
 
 interface Props {
   sender?: string;

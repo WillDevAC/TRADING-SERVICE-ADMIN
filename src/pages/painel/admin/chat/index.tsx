@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import ChatMessage from "./chat_components/chat_message";
+import ChatMessage from "../../../../components/chat/chat_message";
 
-import ChatTalkProfile from "./chat_components/chat_talk_profile";
+import ChatTalkProfile from "../../../../components/chat/chat_talk_profile";
 
-import ChatListItem from "./chat_components/chat_list_item";
+import ChatListItem from "../../../../components/chat/chat_list_item";
 
-import ChatInputContainer from "./chat_components/chat_input_container";
+import ChatInputContainer from "../../../../components/chat/chat_input_container";
 
-import ChatSearch from "./chat_components/chat_search";
+import ChatSearch from "../../../../components/chat/chat_search";
 
 import {
   ChatContainer,
@@ -30,7 +30,7 @@ interface Message {
 }
 
 interface Datum {
-  id: string;
+  name: string;
   profilepic: string;
   lastmsg: string;
   time: number;
@@ -44,15 +44,11 @@ const chat: React.FC = () => {
 
   const [size, setSize] = useState<number>();
 
-  const [search, setSearch] = useState<number | string>();
+  const [search, setSearch] = useState();
 
   useEffect(() => setSize(window.innerWidth), []);
 
   const [data, setData] = useState<Datum[]>([]);
-
-  const FilterData = (e: any) => {
-    const Filter = e.filter((n: any) => n.id);
-  };
 
   useEffect(() => setData(Archives.data), []);
 
@@ -74,7 +70,7 @@ const chat: React.FC = () => {
                   return (
                     <ChatListItem
                       key={key}
-                      id={e.id}
+                      name={e.name}
                       profilePic={e.profilepic}
                       time={e.time}
                       lastMsg={e.lastmsg}
@@ -89,7 +85,7 @@ const chat: React.FC = () => {
             return (
               <ChatTalk key={key}>
                 <div className="w-full h-full flex flex-col justify-between">
-                  <ChatTalkProfile id={e.id} profilePic={e.profilepic} />
+                  <ChatTalkProfile name={e.name} profilePic={e.profilepic} />
                   <ChatMessages>
                     {e.messages.map((e, key) => {
                       return (

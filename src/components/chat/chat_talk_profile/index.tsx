@@ -1,13 +1,13 @@
 import React from "react";
 
-import { GreenBall } from "../../../../../../components/molecules/chat/styles";
+import { GreenBall } from "../../molecules/chat/styles";
 
 interface Props {
-  id: string;
+  name: string;
   profilePic: string;
 }
 
-const chat_talk_profile: React.FC<Props> = ({ profilePic, id }) => {
+const chat_talk_profile: React.FC<Props> = ({ profilePic, name }) => {
   return (
     <div className="relative flex items-center p-3 border-b border-gray-300">
       <img
@@ -15,7 +15,7 @@ const chat_talk_profile: React.FC<Props> = ({ profilePic, id }) => {
         src={profilePic}
         alt="username"
       />
-      <span className="block ml-2 font-bold text-gray-600">{id}</span>
+      <span className="block ml-2 font-bold text-gray-600">{name}</span>
       <GreenBall></GreenBall>
     </div>
   );

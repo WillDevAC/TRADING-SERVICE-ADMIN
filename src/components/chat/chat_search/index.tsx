@@ -5,7 +5,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import {
   ChatSearchIcon,
   ChatSearchInput,
-} from "../../../../../../components/molecules/chat/styles";
+} from "../../molecules/chat/styles";
 
 interface Props {
   setSearch: Function;

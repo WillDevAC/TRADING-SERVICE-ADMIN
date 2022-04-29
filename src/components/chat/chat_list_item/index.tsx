@@ -1,25 +1,33 @@
 import React, { useState } from "react";
 
-import { ChatListItem } from "../../../../../../components/molecules/chat/styles";
+import { ChatListItem } from "../../molecules/chat/styles";
 
 interface Props {
   profilePic: string;
-  id: string;
+  name: string;
   time: number;
   lastMsg: string;
   modalState: Function;
+  key: any;
 }
 
 const chat_list_item: React.FC<Props> = ({
   profilePic,
-  id,
+  name,
   time,
   lastMsg,
   modalState,
+  key
 }) => {
+
+  const handleSetModal = (key: any) => {
+    localStorage.setItem("key_conversa", "key");
+    modalState(true)
+  }
+
   return (
     <>
-      <ChatListItem onClick={() => modalState(true)}>
+      <ChatListItem onClick={() => handleSetModal(key)}>
         <img
           className="object-cover w-10 h-10 rounded-full"
           src={profilePic}
@@ -27,7 +35,7 @@ const chat_list_item: React.FC<Props> = ({
         />
         <div className="w-full pb-2">
           <div className="flex justify-between">
-            <span className="block ml-2 font-semibold text-gray-600">{id}</span>
+            <span className="block ml-2 font-semibold text-gray-600">{name}</span>
             {time / 60 < 60 ? (
               <span className="block ml-2 text-sm text-gray-600">
                 há {time / 60} minutos

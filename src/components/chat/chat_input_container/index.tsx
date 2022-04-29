@@ -5,7 +5,7 @@ import { GrEmoji } from "react-icons/gr";
 import { BsMic } from "react-icons/bs";
 import { BiSend } from "react-icons/bi";
 
-import { ChatInput } from "../../../../../../components/molecules/chat/styles";
+import { ChatInput } from "../../molecules/chat/styles";
 
 const chat_input_container: React.FC = () => {
   return (
