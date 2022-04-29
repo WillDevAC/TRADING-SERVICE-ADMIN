@@ -61,7 +61,7 @@ const chat: React.FC = () => {
       <ChatWrapper>
         <ChatContainer>
           <ChatListContainer>
-            <ChatSearch setSearch={setSearch} value={search}/>
+            <ChatSearch setSearch={setSearch} />
             <ChatList>
               {size < 1000 ? (
                 <ModalChat modal={modal} setModal={setModal} />
@@ -72,15 +72,14 @@ const chat: React.FC = () => {
               <li>
                 {data.map((e, key) => {
                   return (
-                    <>
-                      <ChatListItem
-                        id={e.id}
-                        profilePic={e.profilepic}
-                        time={e.time}
-                        lastMsg={e.lastmsg}
-                        modalState={setModal}
-                      />
-                    </>
+                    <ChatListItem
+                      key={key}
+                      id={e.id}
+                      profilePic={e.profilepic}
+                      time={e.time}
+                      lastMsg={e.lastmsg}
+                      modalState={setModal}
+                    />
                   );
                 })}
               </li>

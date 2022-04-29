@@ -10,8 +10,13 @@ interface Props {
   modalState: Function;
 }
 
-const chat_list_item: React.FC<Props> = ({profilePic, id, time, lastMsg, modalState}) => {
-
+const chat_list_item: React.FC<Props> = ({
+  profilePic,
+  id,
+  time,
+  lastMsg,
+  modalState,
+}) => {
   return (
     <>
       <ChatListItem onClick={() => modalState(true)}>
@@ -22,9 +27,7 @@ const chat_list_item: React.FC<Props> = ({profilePic, id, time, lastMsg, modalSt
         />
         <div className="w-full pb-2">
           <div className="flex justify-between">
-            <span className="block ml-2 font-semibold text-gray-600">
-              {id}
-            </span>
+            <span className="block ml-2 font-semibold text-gray-600">{id}</span>
             {time / 60 < 60 ? (
               <span className="block ml-2 text-sm text-gray-600">
                 há {time / 60} minutos
