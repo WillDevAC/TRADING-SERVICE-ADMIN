@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 
-import LayoutFragment from "../../../../components/layout/consultant";
+import LayoutFragment from "../../../../components/layout/admin";
 
 import TableFooter from "../../../../components/molecules/table/footer";
 import TableHeader from "../../../../components/molecules/table/header";
 
-import ModalProfile from '../../../../components/molecules/modals/modal_viewInvestor'
-
-import Router from 'next/router'
+import ModalViewRequest from '../../../../components/molecules/modals/modal_viewWithdrawnRequest'
 
 import {
   Table,
@@ -24,14 +22,16 @@ import {
   Button,
 } from "../../../../components/molecules/table/global";
 
-const Investors: React.FC = () => {
-
-  const [modal, setModal] = useState<boolean>(false);
+const Withdrawn_requests: React.FC = () => {
+  const [modalView, setModalView] = useState<boolean>(false);
 
   return (
-    <LayoutFragment title="Meus investidores" isBreadcrumb={true} isBack={true}>
+    <LayoutFragment
+      title="Solicitações de saque"
+      isBreadcrumb={true}
+      isBack={true}
+    >
       <TableHeader />
-
       <Wrapper>
         <Table>
           <TableWrapper>
@@ -40,20 +40,21 @@ const Investors: React.FC = () => {
                 <TableResponsive>
                   <TableHead>
                     <Row>
-                      <ColumnTh scope="col">Nome do investidor</ColumnTh>
-                      <ColumnTh scope="col">Patrimonio</ColumnTh>
-                      <ColumnTh scope="col">Rendimento (Mensal)</ColumnTh>
+                      <ColumnTh scope="col">Nome</ColumnTh>
+                      <ColumnTh scope="col">Nivel de acesso</ColumnTh>
+                      <ColumnTh scope="col">Valor de retirada</ColumnTh>
+                      <ColumnTh scope="col">Método de saque</ColumnTh>
                       <ColumnTh scope="col">Ações</ColumnTh>
                     </Row>
                   </TableHead>
                   <TableBody>
                     <Row>
-                      <ColumnTd>JOSE RIBAMAR DA ROCHA</ColumnTd>
-                      <ColumnTd>R$ 0.00</ColumnTd>
-                      <ColumnTd>0.5%</ColumnTd>
+                      <ColumnTd>JOSE SANTOS DA ROCHA</ColumnTd>
+                      <ColumnTd>Consultor</ColumnTd>
+                      <ColumnTd>R$ -400.00</ColumnTd>
+                      <ColumnTd>PIX</ColumnTd>
                       <ColumnTd>
-                        <Button onClick={() => setModal(true)}>Detalhes</Button>
-                        <Button onClick={() => Router.push('extract-investor')}>Extrato</Button>
+                        <Button onClick={() => setModalView(true)}>Detalhes</Button>
                       </ColumnTd>
                     </Row>
                   </TableBody>
@@ -62,13 +63,11 @@ const Investors: React.FC = () => {
             </BoxTable>
           </TableWrapper>
         </Table>
-
+        <ModalViewRequest modal={modalView} setModal={setModalView} />
         <TableFooter />
-
-        <ModalProfile modal={modal} setModal={setModal}/>
       </Wrapper>
     </LayoutFragment>
   );
 };
 
-export default Investors;
+export default Withdrawn_requests;

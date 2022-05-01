@@ -22,7 +22,7 @@ const header: React.FC<IHeader> = ({ setShow, show }) => {
   return (
     <Header>
       <div className="text-white ml-5 font-bold">
-        PORTAL DO CONSULTOR
+        PORTAL TRADING SERVICE
       </div>
       <HeaderWrapper>
         <HeaderDiviser />

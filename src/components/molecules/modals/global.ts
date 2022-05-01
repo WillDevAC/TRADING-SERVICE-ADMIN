@@ -5,7 +5,7 @@ export const Modal = tw.div `
 `
 
 export const ModalOpacity = tw.div `
-    absolute bg-black opacity-90 inset-0 z-0
+    absolute bg-black opacity-80 inset-0 z-0
 `
 
 export const ModalWrapper = tw.div `
@@ -43,4 +43,12 @@ export const Select = tw.select `
 
 export const Wrapper = tw.div `
     border-r border-t rounded border-b border-l border-gray-400 lg:w-full lg:border-l-1 lg:rounded lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal
+`
+
+export const ButtonExclude = tw.button `
+mb-2 md:mb-0 bg-red-500 lg:text-white text-white md:text-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border rounded-full
+`
+
+export const ButtonDocument = tw.button `
+    text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700
 `

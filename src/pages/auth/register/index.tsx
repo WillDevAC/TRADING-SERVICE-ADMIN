@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 
 import Router from "next/router";
 
-import { Input, Select } from "../../../components/templates/register/styles";
+import { Input, Select } from "../../../components/templates/consultant/register/styles";
 
 const RegisterPage: React.FC = () => {
   

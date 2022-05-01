@@ -1,6 +1,6 @@
 import React from "react";
 
-import LayoutFragment from "../../../components/layout";
+import LayoutFragment from "../../../components/layout/consultant";
 import CardDetails from '../../../components/molecules/cards';
 
 const consultor: React.FC = () => {
