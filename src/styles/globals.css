@@ -28,3 +28,11 @@ a {
   left: 0;
   opacity: 0.5;
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 50px;
+}
