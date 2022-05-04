@@ -6,10 +6,7 @@ import {
   ModalWrapper,
   ModalBody,
   ModalFooter,
-  ButtonDecline,
-  ButtonAccept,
-  Label,
-  Input,
+  ButtonDecline
 } from "../global";
 
 interface IProps {
@@ -17,7 +14,7 @@ interface IProps {
   setModal: Function;
 }
 
-const modal_password: React.FC<IProps> = ({ modal, setModal }) => {
+const modal_chat: React.FC<IProps> = ({ modal, setModal }) => {
   return (
     <>
       {modal == true && (
@@ -25,30 +22,12 @@ const modal_password: React.FC<IProps> = ({ modal, setModal }) => {
           <ModalOpacity />
           <ModalWrapper>
             <ModalBody>
-              <div className="pt-5">
-                <Label>Senha antiga </Label>
-                <Input
-                  type="password"
-                />
-              </div>
-              <div className="pt-5">
-                <Label>Nova senha </Label>
-                <Input
-                  type="password"
-                />
-              </div>
-              <div className="pt-5">
-                <Label>Confirmar nova senha </Label>
-                <Input
-                  type="password"
-                />
-              </div>
+              Modal chat
             </ModalBody>
             <ModalFooter>
               <ButtonDecline onClick={() => setModal(false)}>
                 Fechar
               </ButtonDecline>
-              <ButtonAccept onClick={() => {}}>Mudar senha</ButtonAccept>
             </ModalFooter>
           </ModalWrapper>
         </Modal>
@@ -57,4 +36,4 @@ const modal_password: React.FC<IProps> = ({ modal, setModal }) => {
   );
 };
 
-export default modal_password;
+export default modal_chat;
