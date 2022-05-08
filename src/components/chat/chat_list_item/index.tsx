@@ -7,8 +7,7 @@ interface Props {
   name: string;
   time: number;
   lastMsg: string;
-  modalState: Function;
-  key: any;
+  setModal: Function;
 }
 
 const chat_list_item: React.FC<Props> = ({
@@ -16,18 +15,12 @@ const chat_list_item: React.FC<Props> = ({
   name,
   time,
   lastMsg,
-  modalState,
-  key
+  setModal
 }) => {
-
-  const handleSetModal = (key: any) => {
-    localStorage.setItem("key_conversa", "key");
-    modalState(true)
-  }
 
   return (
     <>
-      <ChatListItem onClick={() => handleSetModal(key)}>
+      <ChatListItem onClick={() => setModal(true)}>
         <img
           className="object-cover w-10 h-10 rounded-full"
           src={profilePic}

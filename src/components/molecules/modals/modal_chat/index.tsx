@@ -1,23 +1,19 @@
 import React from "react";
 
-import {
-  Modal,
-  ModalOpacity,
-  ModalWrapper,
-  ModalBody,
-  ModalFooter,
-  ButtonDecline,
-  ButtonAccept,
-  Label,
-  Input,
-} from "../global";
+import { Modal, ModalOpacity, ModalWrapper, ModalBody } from "../global";
+
+import { ChatMessages } from "../../../../components/molecules/chat/styles";
+
+import ChatMessage from "../../../../components/chat/chat_message";
+import ChatTalkProfile from "../../../../components/chat/chat_talk_profile";
+import ChatInputContainer from "../../../../components/chat/chat_input_container";
 
 interface IProps {
   modal: boolean;
   setModal: Function;
 }
 
-const modal_password: React.FC<IProps> = ({ modal, setModal }) => {
+const modal_chat: React.FC<IProps> = ({ modal, setModal }) => {
   return (
     <>
       {modal == true && (
@@ -25,31 +21,29 @@ const modal_password: React.FC<IProps> = ({ modal, setModal }) => {
           <ModalOpacity />
           <ModalWrapper>
             <ModalBody>
-              <div className="pt-5">
-                <Label>Senha antiga </Label>
-                <Input
-                  type="password"
+              <ChatTalkProfile
+                name="user"
+                profilePic="https://cdn.pixabay.com/photo/2018/09/12/12/14/man-3672010__340.jpg"
+              />
+              <ChatMessages>
+                <ChatMessage
+                  key={0}
+                  sender="eai maninho"
+                  receiver="beleza pô"
                 />
-              </div>
-              <div className="pt-5">
-                <Label>Nova senha </Label>
-                <Input
-                  type="password"
+                <ChatMessage
+                  key={1}
+                  sender="top demais eim?"
+                  receiver="né isso"
                 />
-              </div>
-              <div className="pt-5">
-                <Label>Confirmar nova senha </Label>
-                <Input
-                  type="password"
+                <ChatMessage
+                  key={2}
+                  sender="cansei dessa vida"
+                  receiver="você não programa em java calma."
                 />
-              </div>
+              </ChatMessages>
+              <ChatInputContainer />
             </ModalBody>
-            <ModalFooter>
-              <ButtonDecline onClick={() => setModal(false)}>
-                Fechar
-              </ButtonDecline>
-              <ButtonAccept onClick={() => {}}>Mudar senha</ButtonAccept>
-            </ModalFooter>
           </ModalWrapper>
         </Modal>
       )}
@@ -57,4 +51,4 @@ const modal_password: React.FC<IProps> = ({ modal, setModal }) => {
   );
 };
 
-export default modal_password;
+export default modal_chat;
