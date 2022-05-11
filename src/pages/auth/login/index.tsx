@@ -1,13 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { api } from "../../../services/api";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { toast } from "react-nextjs-toast";
 import dayjs from "dayjs";
 const LoginPage: React.FC = () => {
   const { register, handleSubmit } = useForm();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const { pathname, asPath, push, query } = useRouter();
+  useEffect(() => {
+    if (!!asPath && !!pathname && typeof window !== undefined) {
+      const value = localStorage.getItem("@token");
+      const date = localStorage.getItem("@timestampToken");
+      const typeUser = localStorage.getItem("@typeUser");
+      const isValid =
+        value &&
+        dayjs(date).toDate().getDate() === dayjs(new Date()).toDate().getDate();
+
+      if (!!typeUser && typeUser == "admin" && !!isValid) {
+        push(`/painel/admin`);
+      }
+      if (!!typeUser && typeUser == "consultant" && !!isValid) {
+        push(`/painel/consultant`);
+      }
+      setLoading(false)
+    }
+  }, [typeof window, query, asPath]);
 
   const onSubmit = async (data) => {
     if (loading) return;
@@ -19,6 +38,7 @@ const LoginPage: React.FC = () => {
       toast.notify(response.data?.message, {
         title: "error",
       });
+      setLoading(false);
     } else {
       localStorage.setItem("@token", response?.data?.accessToken);
       localStorage.setItem(
@@ -34,7 +54,7 @@ const LoginPage: React.FC = () => {
         `/painel/${!!response.data.user.isMaster ? "admin" : "consultant"}`
       );
     }
-    setLoading(false);
+ 
   };
 
   return (

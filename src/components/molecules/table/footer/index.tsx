@@ -14,29 +14,61 @@ import {
   Current,
 } from "./styles";
 
-import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
-const TableFooter: React.FC = () => {
+interface Props {
+  skip: number;
+  take: number;
+  count: number;
+  setSkip(arg: number): void;
+}
+const TableFooter: React.FC<Props> = ({ skip, setSkip, take, count }) => {
   return (
     <div className="w-full">
       <TableFooterMain>
         <TableMobileFooterPagination>
-          <MobilePrevPagination>Anterior</MobilePrevPagination>
+          <MobilePrevPagination
+            onClick={() => {
+              if (skip > 0) {
+                setSkip(skip - 1);
+              }
+            }}
+          >
+            Anterior
+          </MobilePrevPagination>
           <CurrentMobilePagination>
-            <Current>1</Current>
+            <Current>{skip + 1}</Current>
           </CurrentMobilePagination>
-          <MobileNextPagination>Próximo</MobileNextPagination>
+          <MobileNextPagination
+            onClick={() => {
+              setSkip(skip + 1);
+            }}
+          >
+            Próximo
+          </MobileNextPagination>
         </TableMobileFooterPagination>
 
         <TableFooterDesktop>
-          <Current>Exibindo 3 resultados</Current>
+          <Current>Exibindo {take} resultados</Current>
           <TableFooterDesktopPagination>
-            <Prev aria-label="Previous">
-                <GrFormPrevious/>
+            <Prev
+              onClick={() => {
+                if (skip > 0) {
+                  setSkip(skip - 1);
+                }
+              }}
+              aria-label="Previous"
+            >
+              <GrFormPrevious />
             </Prev>
-            <CurrentPageDesktop>1</CurrentPageDesktop>
-            <Next aria-label="Next">
-                <GrFormNext/>
+            <CurrentPageDesktop>{skip + 1}</CurrentPageDesktop>
+            <Next
+              onClick={() => {
+                setSkip(skip + 1);
+              }}
+              aria-label="Next"
+            >
+              <GrFormNext />
             </Next>
           </TableFooterDesktopPagination>
         </TableFooterDesktop>

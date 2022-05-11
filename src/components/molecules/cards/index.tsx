@@ -13,7 +13,7 @@ import {
 
 interface IProps {
   title: string;
-  value: number;
+  value: number | string;
   icon: string;
 }
 

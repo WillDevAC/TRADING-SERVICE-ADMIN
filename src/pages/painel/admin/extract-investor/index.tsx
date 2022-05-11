@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Table,
@@ -18,17 +18,75 @@ import {
 
 import TableFooter from "../../../../components/molecules/table/footer";
 
-import CardDetails from '../../../../components/molecules/cards';
+import CardDetails from "../../../../components/molecules/cards";
 
 import LayoutFragment from "../../../../components/layout/admin";
+import { useRouter } from "next/router";
+import { api } from "../../../../services/api";
+import { toast } from "react-nextjs-toast";
+import dayjs from "dayjs";
+
+interface IStatement {
+  id: string;
+  amount: number;
+  oldAmount: number;
+  createdAt: string;
+  type: {
+    id: string;
+    description: string;
+  };
+}
 
 const extract: React.FC = () => {
+  const { query } = useRouter();
+  const [count, setCount] = useState(0);
+  const take = 10;
+  const [skip, setSkip] = useState(0);
+  const [statement, setStatement] = useState<IStatement[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const tranlate = (e: string, isPlural?: boolean) => {
+    if (e == "deposit") return String("Depósito" + (!!isPlural ? "s" : ""));
+    if (e == "reward") return String("Rendimento" + (!!isPlural ? "s" : ""));
+    if (e == "withdraw") return String("Saque" + (!!isPlural ? "s" : ""));
+    return "";
+  };
+
+  const onLoad = async () => {
+    setLoading(true);
+    const response = await api.get(
+      `/statement/${query?.id}?take=5&skip=${skip}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("@token"),
+        },
+      }
+    );
+    if (!!response?.data) {
+      setStatement(response.data.data);
+      setCount(response.data.count / 5);
+    } else {
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    }
+    setLoading(false);
+  };
+  useEffect(() => {
+    if (!!query?.id && typeof window !== undefined) {
+      onLoad();
+    }
+  }, [typeof window, query, skip]);
   return (
-    <LayoutFragment title="Extrato individual" isBreadcrumb={true} isBack={true}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <LayoutFragment
+      title="Extrato individual"
+      isBreadcrumb={true}
+      isBack={true}
+    >
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <CardDetails title="Entradas" value={0.00} icon='/icons/saldo.svg'/>
         <CardDetails title="Saidas" value={0.00} icon='/icons/saldo.svg'/>
-      </div>
+      </div> */}
       <Wrapper>
         <Table>
           <TableWrapper>
@@ -40,18 +98,27 @@ const extract: React.FC = () => {
                       <ColumnTh scope="col">Data/hora</ColumnTh>
                       <ColumnTh scope="col">Operação</ColumnTh>
                       <ColumnTh scope="col">Valor</ColumnTh>
-                      <ColumnTh scope="col">Status da operação</ColumnTh>
                     </Row>
                   </TableHead>
                   <TableBody>
-                    <Row>
-                      <ColumnTd>15/03/2019</ColumnTd>
-                      <ColumnTd>Déposito</ColumnTd>
-                      <ColumnTd>+R$20.00</ColumnTd>
-                      <ColumnTd>
-                        <Badge color="bg-green-600">Finalizada</Badge>
-                      </ColumnTd>
-                    </Row>
+                    {statement.map((res) => {
+                      return (
+                        <Row>
+                          <ColumnTd>
+                            {dayjs(res.createdAt)
+                              .format("DD/MM/YYYY")
+                              .toString()}
+                          </ColumnTd>
+                          <ColumnTd>{tranlate(res.type.description)}</ColumnTd>
+                          <ColumnTd>
+                            {(res.amount - res.oldAmount).toLocaleString(
+                              "pt-BR",
+                              { style: "currency", currency: "BRL" }
+                            )}
+                          </ColumnTd>
+                        </Row>
+                      );
+                    })}
                   </TableBody>
                 </TableResponsive>
               </Content>
@@ -59,7 +126,7 @@ const extract: React.FC = () => {
           </TableWrapper>
         </Table>
 
-        <TableFooter />
+        <TableFooter count={count} setSkip={setSkip} skip={skip} take={take} />
       </Wrapper>
     </LayoutFragment>
   );

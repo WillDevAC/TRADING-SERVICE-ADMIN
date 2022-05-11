@@ -3,6 +3,7 @@ import React from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { MdLogout } from "react-icons/md";
 
+import Router from "next/router";
 import {
   Header,
   HeaderWrapper,
@@ -21,16 +22,20 @@ interface IHeader {
 const header: React.FC<IHeader> = ({ setShow, show }) => {
   return (
     <Header>
-      <div className="text-white ml-5 font-bold">
-        PORTAL TRADING SERVICE
-      </div>
+      <div className="text-white ml-5 font-bold">PORTAL TRADING SERVICE</div>
       <HeaderWrapper>
         <HeaderDiviser />
 
         <HeaderGroup>
           <HeaderGroupItem>
             <Item>
-              <div className="relative cursor-pointer text-gray-600">
+              <div
+                onClick={() => {
+                  localStorage.clear();
+                  Router.replace("/auth/login");
+                }}
+                className="relative cursor-pointer text-gray-600"
+              >
                 <MdLogout size={25} />
               </div>
             </Item>

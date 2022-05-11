@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import LayoutFragment from "../../../../components/layout/admin";
 
 import TableFooter from "../../../../components/molecules/table/footer";
 import TableHeader from "../../../../components/molecules/table/header";
 
-import ModalViewRequest from '../../../../components/molecules/modals/modal_viewWithdrawnRequest'
+import ModalViewRequest from "../../../../components/molecules/modals/modal_viewWithdrawnRequest";
 
 import {
   Table,
@@ -21,17 +21,74 @@ import {
   TableBody,
   Button,
 } from "../../../../components/molecules/table/global";
+import { api } from "../../../../services/api";
+import { toast } from "react-nextjs-toast";
+
+export interface RequestWithdraw {
+  id: string;
+  user?: {
+    name: string;
+  };
+  type?: {
+    description: string;
+  };
+  pixKeyType?: {
+    description: string;
+  };
+  network?: {
+    description: string;
+  };
+  status?: {
+    description: string;
+  };
+  pixKey?: string;
+  address?: string;
+  amount: number;
+  confirmedAmount: number;
+  createdAt: string;
+}
 
 const Withdrawn_requests: React.FC = () => {
   const [modalView, setModalView] = useState<boolean>(false);
+  const [skip, setSkip] = useState<number>(0);
+  const [search, setSearch] = useState<string>("");
+  const [count, setCount] = useState(0);
+  const take = 10;
+  const [data, setData] = useState<RequestWithdraw[]>([]);
+  const [requestId, setRequestId] = useState(null);
 
+  const onLoad = async () => {
+    const response = await api.get(
+      `/transaction/request-withdraw?take=${take}&skip=${skip}&search=${search}`,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("@token"),
+        },
+      }
+    );
+    if (!response.data.message) {
+      setData(response.data.data);
+      console.log(response.data);
+      setCount(Math.ceil(response.data.count / take));
+    } else {
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window) {
+      onLoad();
+    }
+  }, [typeof window, skip, search]);
   return (
     <LayoutFragment
       title="Solicitações de saque"
       isBreadcrumb={true}
       isBack={true}
     >
-      <TableHeader />
+      <TableHeader search={search} setSearch={setSearch} />
       <Wrapper>
         <Table>
           <TableWrapper>
@@ -48,23 +105,40 @@ const Withdrawn_requests: React.FC = () => {
                     </Row>
                   </TableHead>
                   <TableBody>
-                    <Row>
-                      <ColumnTd>JOSE SANTOS DA ROCHA</ColumnTd>
-                      <ColumnTd>Consultor</ColumnTd>
-                      <ColumnTd>R$ -400.00</ColumnTd>
-                      <ColumnTd>PIX</ColumnTd>
-                      <ColumnTd>
-                        <Button onClick={() => setModalView(true)}>Detalhes</Button>
-                      </ColumnTd>
-                    </Row>
+                    {data.map((res, i) => {
+                      return (
+                        <Row key={i}>
+                          <ColumnTd>{res.user.name}</ColumnTd>
+                          <ColumnTd>Investidor</ColumnTd>
+                          <ColumnTd>{res.amount}</ColumnTd>
+                          <ColumnTd>{res.type.description}</ColumnTd>
+                          <ColumnTd>
+                            <Button
+                              onClick={() => {
+                                setRequestId(res.id);
+                                setModalView(true);
+                              }}
+                            >
+                              Detalhes
+                            </Button>
+                          </ColumnTd>
+                        </Row>
+                      );
+                    })}
                   </TableBody>
                 </TableResponsive>
               </Content>
             </BoxTable>
           </TableWrapper>
         </Table>
-        <ModalViewRequest modal={modalView} setModal={setModalView} />
-        <TableFooter />
+        <ModalViewRequest
+          request={
+            !!requestId ? data.find((r) => r.id == requestId) : undefined
+          }
+          modal={modalView}
+          setModal={setModalView}
+        />
+        <TableFooter count={count} take={take} skip={skip} setSkip={setSkip} />
       </Wrapper>
     </LayoutFragment>
   );

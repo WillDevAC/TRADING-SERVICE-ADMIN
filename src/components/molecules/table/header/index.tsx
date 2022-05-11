@@ -13,7 +13,11 @@ import {
 import { AiOutlineSearch } from 'react-icons/ai'
 import { BiFilter } from 'react-icons/bi'
 
-const TableHeader: React.FC = () => {
+interface Props {
+  search: string;
+  setSearch(args: string): void;
+}
+const TableHeader: React.FC<Props> = ({search, setSearch}) => {
   return (
     <TableHeaderMain>
       <TableHeaderWrapper>
@@ -21,7 +25,7 @@ const TableHeader: React.FC = () => {
           <IconWrapper>
             <AiOutlineSearch/>
           </IconWrapper>
-          <InputSearch />
+          <InputSearch  value={search} onChange={(e)=> setSearch(e.target.value)}/>
         </TableLeftContent>
         <TableRightContent>
           <BiFilter/>

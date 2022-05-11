@@ -1,7 +1,7 @@
 import axios from 'axios'
 const api = axios.create({
-   // baseURL: 'https://my-app-jk42m.ondigitalocean.app',
-  baseURL: process.env.API_URL || 'https://my-app-jk42m.ondigitalocean.app',
+   baseURL: 'http://localhost:3333',
+ // baseURL: process.env.API_URL || 'https://my-app-jk42m.ondigitalocean.app',
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Accept': 'application/json',

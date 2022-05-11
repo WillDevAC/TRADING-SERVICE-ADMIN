@@ -25,6 +25,8 @@ const layout_admin: React.FC<IProps> = ({
   urlBack,
 }) => {
   const [show, setShow] = useState<Boolean>(false);
+  const [loading, setLoading]= useState<boolean>(true);
+
 
   return (
     <div className="w-full h-full">

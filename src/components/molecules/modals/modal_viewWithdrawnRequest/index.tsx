@@ -1,4 +1,5 @@
 import React from "react";
+import { RequestWithdraw } from "../../../../pages/painel/admin/withdrawn-requests";
 
 import {
   Modal,
@@ -15,9 +16,10 @@ import {
 interface IProps {
   modal: boolean;
   setModal: Function;
+  request?: RequestWithdraw
 }
 
-const modal_view_withdrawn: React.FC<IProps> = ({ modal, setModal }) => {
+const modal_view_withdrawn: React.FC<IProps> = ({ modal, setModal, request }) => {
   return (
     <>
       {modal == true && (
@@ -28,12 +30,12 @@ const modal_view_withdrawn: React.FC<IProps> = ({ modal, setModal }) => {
               <h2 className="font-bold text-lg">Informações do saque</h2>
               <div className="pt-5">
                 <p>Solicitante: </p>
-                <b>Wydenmairion silva da rocha</b>
+                <b>{request.user.name}</b>
               </div>
 
               <div className="pt-5">
-                <p>Saldo atual: </p>
-                <b>R$ 0.00</b>
+                <p>Tipo de saque: </p>
+                <b>{request?.type.description}</b>
               </div>
 
               <div className="pt-5">
