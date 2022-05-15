@@ -63,7 +63,7 @@ const Investors: React.FC = () => {
   const take = 10;
   const onLoad = async () => {
     const response = await api.get(
-      `/user/all?take=${take}&skip=${skip}&search=${search}`,
+      `/user/all?take=${take}&skip=${skip*take}&search=${search}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -166,7 +166,7 @@ const Investors: React.FC = () => {
           </TableWrapper>
         </Table>
 
-        <TableFooter count={count} take={take} skip={skip} setSkip={setSkip} />
+        <TableFooter count={users?.length} take={take} skip={skip} setSkip={setSkip} />
 
         <ModalViewInvestor
           user={

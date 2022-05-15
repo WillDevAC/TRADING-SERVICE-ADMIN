@@ -49,7 +49,7 @@ const TableFooter: React.FC<Props> = ({ skip, setSkip, take, count }) => {
         </TableMobileFooterPagination>
 
         <TableFooterDesktop>
-          <Current>Exibindo {take} resultados</Current>
+          <Current>Exibindo {count} resultados</Current>
           <TableFooterDesktopPagination>
             <Prev
               onClick={() => {

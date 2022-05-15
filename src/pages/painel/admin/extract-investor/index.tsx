@@ -55,7 +55,7 @@ const extract: React.FC = () => {
   const onLoad = async () => {
     setLoading(true);
     const response = await api.get(
-      `/statement/${query?.id}?take=5&skip=${skip}`,
+      `/statement/${query?.id}?take=${take}&skip=${skip*take}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -126,7 +126,7 @@ const extract: React.FC = () => {
           </TableWrapper>
         </Table>
 
-        <TableFooter count={count} setSkip={setSkip} skip={skip} take={take} />
+        <TableFooter count={statement?.length} setSkip={setSkip} skip={skip} take={take} />
       </Wrapper>
     </LayoutFragment>
   );

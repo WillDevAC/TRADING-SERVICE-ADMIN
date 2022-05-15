@@ -59,7 +59,7 @@ const Withdrawn_requests: React.FC = () => {
 
   const onLoad = async () => {
     const response = await api.get(
-      `/transaction/request-withdraw?take=${take}&skip=${skip}&search=${search}`,
+      `/transaction/request-withdraw?take=${take}&skip=${skip*take}&search=${search}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -81,7 +81,22 @@ const Withdrawn_requests: React.FC = () => {
     if (typeof window) {
       onLoad();
     }
-  }, [typeof window, skip, search]);
+  }, [typeof window, skip, search, modalView]);
+
+  const translateStatus = (arg: string) => {
+    if (arg == "confirmed") {
+      return "CONFIRMADO";
+    }
+    if (arg == "pending") {
+      return "PENDENTE";
+    }
+    if (arg == "reject") {
+      return "REJEITADO";
+    }
+    if (arg == "error") {
+      return "ERROR";
+    }
+  };
   return (
     <LayoutFragment
       title="Solicitações de saque"
@@ -110,8 +125,18 @@ const Withdrawn_requests: React.FC = () => {
                         <Row key={i}>
                           <ColumnTd>{res.user.name}</ColumnTd>
                           <ColumnTd>Investidor</ColumnTd>
-                          <ColumnTd>{res.amount}</ColumnTd>
-                          <ColumnTd>{res.type.description}</ColumnTd>
+                          <ColumnTd>
+                            {(res.confirmedAmount > 0
+                              ? res.confirmedAmount
+                              : res.amount
+                            ).toLocaleString("pt-BR", {
+                              style: "currency",
+                              currency: "BRL",
+                            })}
+                          </ColumnTd>
+                          <ColumnTd>
+                            {res.type.description.toLocaleUpperCase()}
+                          </ColumnTd>
                           <ColumnTd>
                             <Button
                               onClick={() => {
@@ -121,6 +146,17 @@ const Withdrawn_requests: React.FC = () => {
                             >
                               Detalhes
                             </Button>
+                            <span
+                              style={{
+                                padding: 10,
+                                borderRadius: 4,
+                                marginLeft: 8,
+                                border: "solid",
+                                borderWidth: 1,
+                              }}
+                            >
+                              {translateStatus(res.status.description)}
+                            </span>
                           </ColumnTd>
                         </Row>
                       );

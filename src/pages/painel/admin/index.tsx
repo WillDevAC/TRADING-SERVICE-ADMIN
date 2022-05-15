@@ -54,12 +54,12 @@ const HomeAdministrator: React.FC = () => {
       <LayoutFragment title="Dashboard" isBreadcrumb={false} isBack={false}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <CardDetails
-            title="Consultores"
+            title="Consultores ativos"
             value={data.countConsultant}
             icon="/icons/consultores.svg"
           />
           <CardDetails
-            title="Investidores"
+            title="Investidores ativos"
             value={data.countUser}
             icon="/icons/investidores.svg"
           />

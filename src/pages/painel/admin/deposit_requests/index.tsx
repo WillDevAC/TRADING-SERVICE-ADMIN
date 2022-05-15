@@ -20,15 +20,23 @@ import {
   Button,
 } from "../../../../components/molecules/table/global";
 
-import ModalViewRequest from '../../../../components/molecules/modals/modal_viewDepositRequest'
+import ModalViewRequest from "../../../../components/molecules/modals/modal_viewDepositRequest";
 
 const Deposit_requests: React.FC = () => {
-
   const [modalView, setModalView] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const take = 10;
+  const [data, setData] = useState([]);
+  const [skip, setSkip] = useState<number>(0);
+  const [search, setSearch] = useState<string>("");
 
   return (
-    <LayoutFragment title="Solicitações de déposito" isBreadcrumb={true} isBack={true}>
-      <TableHeader />
+    <LayoutFragment
+      title="Solicitações de déposito"
+      isBreadcrumb={true}
+      isBack={true}
+    >
+      <TableHeader search={search} setSearch={setSearch} />
       <Wrapper>
         <Table>
           <TableWrapper>
@@ -49,7 +57,9 @@ const Deposit_requests: React.FC = () => {
                       <ColumnTd>R$ +500.00</ColumnTd>
                       <ColumnTd>R$ 0.00</ColumnTd>
                       <ColumnTd>
-                        <Button onClick={() => setModalView(true)}>Detalhes</Button>
+                        <Button onClick={() => setModalView(true)}>
+                          Detalhes
+                        </Button>
                       </ColumnTd>
                     </Row>
                   </TableBody>
@@ -58,7 +68,12 @@ const Deposit_requests: React.FC = () => {
             </BoxTable>
           </TableWrapper>
         </Table>
-        <TableFooter />
+        <TableFooter
+          count={data?.length}
+          setSkip={setSkip}
+          skip={skip}
+          take={take}
+        />
       </Wrapper>
       <ModalViewRequest modal={modalView} setModal={setModalView} />
     </LayoutFragment>
