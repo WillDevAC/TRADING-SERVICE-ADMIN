@@ -12,7 +12,7 @@ const RegisterPage: React.FC = () => {
 
   const onSubmit = async (data) => {
     
-    //console.log(data);
+    console.log(data);
 
 
   };
@@ -163,7 +163,7 @@ const RegisterPage: React.FC = () => {
                     >
                       Frente do documento
                     </label>
-                    <Input type="file" id="frente" {...register("front_document")} required/>
+                    <Input type="file" id="frente" {...register("front_document")} accept="image/png, image/gif, image/jpeg" required/>
                   </div>
                 </div>
               </div>
@@ -177,7 +177,7 @@ const RegisterPage: React.FC = () => {
                     >
                       Verso do documento
                     </label>
-                    <Input type="file" id="verso" {...register("verse_document")} required/>
+                    <Input type="file" id="verso" {...register("verse_document")} accept="image/png, image/gif, image/jpeg" required/>
                   </div>
                 </div>
               </div>
