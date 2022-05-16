@@ -75,6 +75,21 @@ const Deposit_requests: React.FC = () => {
     }
   }, [typeof window, skip, search, modalView]);
 
+  const translateStatus = (arg: string) => {
+    if (arg == "confirmed") {
+      return "CONFIRMADO";
+    }
+    if (arg == "pending") {
+      return "PENDENTE";
+    }
+    if (arg == "reject") {
+      return "REJEITADO";
+    }
+    if (arg == "error") {
+      return "ERROR";
+    }
+  };
+
   return (
     <LayoutFragment
       title="Solicitações de déposito"
@@ -119,6 +134,17 @@ const Deposit_requests: React.FC = () => {
                             <Button onClick={() => {setId(res.id);setModalView(true)}}>
                               Detalhes
                             </Button>
+                            <span
+                              style={{
+                                padding: 10,
+                                borderRadius: 4,
+                                marginLeft: 8,
+                                border: "solid",
+                                borderWidth: 1,
+                              }}
+                            >
+                              {translateStatus(res.status.description)}
+                            </span>
                           </ColumnTd>
                         </Row>
                       );

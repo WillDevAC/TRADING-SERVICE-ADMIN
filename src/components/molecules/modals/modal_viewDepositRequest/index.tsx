@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { DepositData } from "../../../../pages/painel/admin/deposit_requests";
-
+import { api } from "../../../../services/api";
+import { toast } from "react-nextjs-toast";
 import {
   Modal,
   ModalOpacity,
@@ -23,6 +24,7 @@ interface IProps {
 
 const modal_view_deposit: React.FC<IProps> = ({ modal, setModal, request }) => {
   const [confirmedValue, setConfirmedValue] = useState(0);
+  const [loading, setLoading]= useState<boolean>(false)
   useEffect(() => {
     if (!!request) {
       setConfirmedValue(
@@ -42,6 +44,56 @@ const modal_view_deposit: React.FC<IProps> = ({ modal, setModal, request }) => {
       }
     );
   }, [confirmedValue, request]);
+
+
+  const reject = async () =>{
+    setLoading(true);
+    const response = await api.put(
+      "/transaction/request-deposit/reject",
+      {
+        requestDepositId: request.id,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("@token"),
+        },
+      }
+    );
+    if (!response?.data?.message) {
+    } else {
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    }
+    setLoading(false);
+    setModal(false)
+  }
+
+
+  const approve = async () => {
+    setLoading(true);
+    const response = await api.put(
+      "/transaction/request-deposit/approve",
+      {
+        confirmedAmount: confirmedValue,
+        requestDepositId: request.id,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("@token"),
+        },
+      }
+    );
+    if (!response?.data?.message) {
+    } else {
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    }
+    setLoading(false);
+    setModal(false)
+  };
+
   return (
     <>
       {modal == true && (
@@ -101,10 +153,10 @@ const modal_view_deposit: React.FC<IProps> = ({ modal, setModal, request }) => {
                 Fechar
               </ButtonDecline>
               {request.status.description === "pending" && (
-                <ButtonAccept>Aceitar</ButtonAccept>
+                <ButtonAccept onClick={approve}>Aceitar</ButtonAccept>
               )}
               {request.status.description === "pending" && (
-                <ButtonExclude>Recusar</ButtonExclude>
+                <ButtonExclude onClick={reject}>Recusar</ButtonExclude>
               )}
             </ModalFooter>
           </ModalWrapper>
