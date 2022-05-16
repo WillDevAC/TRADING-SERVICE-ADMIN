@@ -2,16 +2,19 @@ import React from "react";
 
 import { useForm } from "react-hook-form";
 
-import Router from "next/router";
-
 import { Input, Select } from "../../../components/templates/consultant/register/styles";
+
+import InputMask from "react-input-mask";
 
 const RegisterPage: React.FC = () => {
   
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data) => {
-    Router.replace("/painel/consultant");
+  const onSubmit = async (data) => {
+    
+    //console.log(data);
+
+
   };
 
   return (
@@ -32,9 +35,10 @@ const RegisterPage: React.FC = () => {
                   Nome completo
                 </label>
                 <input
-                  type="email"
-                  name="email"
+                  type="text"
+                  name="name"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("full_name")}
                   required
                 />
               </div>
@@ -47,9 +51,10 @@ const RegisterPage: React.FC = () => {
                   Email
                 </label>
                 <input
-                  type="text"
-                  name="text"
+                  type="email"
+                  name="email"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("email")}
                   required
                 />
               </div>
@@ -62,9 +67,10 @@ const RegisterPage: React.FC = () => {
                   Senha
                 </label>
                 <input
-                  type="text"
-                  name="text"
+                  type="password"
+                  name="password"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("password")}
                   required
                 />
               </div>
@@ -76,10 +82,12 @@ const RegisterPage: React.FC = () => {
                 >
                   CPF
                 </label>
-                <input
+                <InputMask
+                  mask="999.999.999-99"
                   type="text"
-                  name="text"
+                  name="cpf"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("cpf")}
                   required
                 />
               </div>
@@ -91,10 +99,11 @@ const RegisterPage: React.FC = () => {
                 >
                   RG
                 </label>
-                <input
-                  type="text"
-                  name="text"
+                <InputMask
+                  mask="9999999"
+                  name="rg"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("rg")}
                   required
                 />
               </div>
@@ -108,8 +117,9 @@ const RegisterPage: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  name="text"
+                  name="endereco"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("address")}
                   required
                 />
               </div>
@@ -121,10 +131,11 @@ const RegisterPage: React.FC = () => {
                 >
                   CEP
                 </label>
-                <input
-                  type="text"
-                  name="text"
+                <InputMask
+                  mask="99999-999"
+                  name="cep"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("cep")}
                   required
                 />
               </div>
@@ -137,9 +148,9 @@ const RegisterPage: React.FC = () => {
                   Tipo de documento
                 </label>
 
-                <Select id="tipo-documento">
-                  <option>Identidade</option>
-                  <option>CNH</option>
+                <Select id="tipo-documento" {...register("type_document")} required>
+                  <option value="identidade">Identidade</option>
+                  <option value="cnh">CNH</option>
                 </Select>
               </div>
 
@@ -152,7 +163,7 @@ const RegisterPage: React.FC = () => {
                     >
                       Frente do documento
                     </label>
-                    <Input type="file" id="frente" />
+                    <Input type="file" id="frente" {...register("front_document")} required/>
                   </div>
                 </div>
               </div>
@@ -166,7 +177,7 @@ const RegisterPage: React.FC = () => {
                     >
                       Verso do documento
                     </label>
-                    <Input type="file" id="verso" />
+                    <Input type="file" id="verso" {...register("verse_document")} required/>
                   </div>
                 </div>
               </div>

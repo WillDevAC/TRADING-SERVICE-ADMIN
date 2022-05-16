@@ -23,6 +23,7 @@
     "react-dom": "17.0.1",
     "react-hook-form": "^7.29.0",
     "react-icons": "^4.3.1",
+    "react-input-mask": "^3.0.0-alpha.2",
     "react-nextjs-toast": "^1.2.5",
     "styled-components": "^5.3.5",
     "tailwind-styled-components": "^2.1.6"
