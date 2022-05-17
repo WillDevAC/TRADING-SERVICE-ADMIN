@@ -55,7 +55,7 @@ const extract: React.FC = () => {
   const onLoad = async () => {
     setLoading(true);
     const response = await api.get(
-      `/statement/${query?.id}?take=${take}&skip=${skip*take}`,
+      `/statement/${query?.id}?take=${take}&skip=${skip * take}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -101,24 +101,34 @@ const extract: React.FC = () => {
                     </Row>
                   </TableHead>
                   <TableBody>
-                    {statement.map((res) => {
-                      return (
-                        <Row>
-                          <ColumnTd>
-                            {dayjs(res.createdAt)
-                              .format("DD/MM/YYYY")
-                              .toString()}
-                          </ColumnTd>
-                          <ColumnTd>{tranlate(res.type.description)}</ColumnTd>
-                          <ColumnTd>
-                            {(res.amount - res.oldAmount).toLocaleString(
-                              "pt-BR",
-                              { style: "currency", currency: "BRL" }
-                            )}
-                          </ColumnTd>
-                        </Row>
-                      );
-                    })}
+                    {statement?.length !== 0 ? (
+                      statement.map((res) => {
+                        return (
+                          <Row>
+                            <ColumnTd>
+                              {dayjs(res.createdAt)
+                                .format("DD/MM/YYYY")
+                                .toString()}
+                            </ColumnTd>
+                            <ColumnTd>
+                              {tranlate(res.type.description)}
+                            </ColumnTd>
+                            <ColumnTd>
+                              {(res.amount - res.oldAmount).toLocaleString(
+                                "pt-BR",
+                                { style: "currency", currency: "BRL" }
+                              )}
+                            </ColumnTd>
+                          </Row>
+                        );
+                      })
+                    ) : (
+                      <>
+                        <div>
+                          <span>Não há transações para mostrar...</span>
+                        </div>
+                      </>
+                    )}
                   </TableBody>
                 </TableResponsive>
               </Content>
@@ -126,7 +136,12 @@ const extract: React.FC = () => {
           </TableWrapper>
         </Table>
 
-        <TableFooter count={statement?.length} setSkip={setSkip} skip={skip} take={take} />
+        <TableFooter
+          count={statement?.length}
+          setSkip={setSkip}
+          skip={skip}
+          take={take}
+        />
       </Wrapper>
     </LayoutFragment>
   );

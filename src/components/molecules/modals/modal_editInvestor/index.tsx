@@ -101,6 +101,26 @@ const modal_EditInvestor: React.FC<IProps> = ({ modal, setModal, user }) => {
     setLoading(false);
   };
 
+  const deleteUser = async () => {
+    setLoading(true);
+    const response = await api.delete("/user/delete/" + user.id, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+      },
+    });
+    if (!response.data.message) {
+      toast.notify("Dados atualizados!", {
+        title: "success",
+      });
+    } else {
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    }
+
+    setLoading(false);
+  };
+
   return (
     <>
       {modal == true && (
@@ -163,6 +183,21 @@ const modal_EditInvestor: React.FC<IProps> = ({ modal, setModal, user }) => {
                   }}
                 >
                   Aprovar usuário
+                </ButtonAccept>
+              )}
+              {!user.deleted && user.isActived && (
+                <ButtonAccept
+                  style={{
+                    backgroundColor: "#CC0000",
+                    borderColor: "#CC0000",
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    deleteUser();
+                    setModal(false);
+                  }}
+                >
+                  Deletar
                 </ButtonAccept>
               )}
               <ButtonDecline onClick={() => setModal(false)}>

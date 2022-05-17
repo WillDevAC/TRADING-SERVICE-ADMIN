@@ -23,6 +23,7 @@ import {
 } from "../../../../components/molecules/table/global";
 import { api } from "../../../../services/api";
 import { toast } from "react-nextjs-toast";
+import dayjs from "dayjs";
 
 export interface RequestWithdraw {
   id: string;
@@ -59,7 +60,9 @@ const Withdrawn_requests: React.FC = () => {
 
   const onLoad = async () => {
     const response = await api.get(
-      `/transaction/request-withdraw?take=${take}&skip=${skip*take}&search=${search}`,
+      `/transaction/request-withdraw?take=${take}&skip=${
+        skip * take
+      }&search=${search}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -113,54 +116,62 @@ const Withdrawn_requests: React.FC = () => {
                   <TableHead>
                     <Row>
                       <ColumnTh scope="col">Nome</ColumnTh>
-                      <ColumnTh scope="col">Nivel de acesso</ColumnTh>
+                      <ColumnTh scope="col">Data</ColumnTh>
                       <ColumnTh scope="col">Valor de retirada</ColumnTh>
                       <ColumnTh scope="col">Método de saque</ColumnTh>
                       <ColumnTh scope="col">Ações</ColumnTh>
                     </Row>
                   </TableHead>
                   <TableBody>
-                    {data.map((res, i) => {
-                      return (
-                        <Row key={i}>
-                          <ColumnTd>{res.user.name}</ColumnTd>
-                          <ColumnTd>Investidor</ColumnTd>
-                          <ColumnTd>
-                            {(res.confirmedAmount > 0
-                              ? res.confirmedAmount
-                              : res.amount
-                            ).toLocaleString("pt-BR", {
-                              style: "currency",
-                              currency: "BRL",
-                            })}
-                          </ColumnTd>
-                          <ColumnTd>
-                            {res.type.description.toLocaleUpperCase()}
-                          </ColumnTd>
-                          <ColumnTd>
-                            <Button
-                              onClick={() => {
-                                setRequestId(res.id);
-                                setModalView(true);
-                              }}
-                            >
-                              Detalhes
-                            </Button>
-                            <span
-                              style={{
-                                padding: 10,
-                                borderRadius: 4,
-                                marginLeft: 8,
-                                border: "solid",
-                                borderWidth: 1,
-                              }}
-                            >
-                              {translateStatus(res.status.description)}
-                            </span>
-                          </ColumnTd>
-                        </Row>
-                      );
-                    })}
+                    {data?.length !== 0 ? (
+                      data.map((res, i) => {
+                        return (
+                          <Row key={i}>
+                            <ColumnTd>{res.user.name}</ColumnTd>
+                            <ColumnTd>{dayjs(res.createdAt).format('DD/MM/YYYY')}</ColumnTd>
+                            <ColumnTd>
+                              {(res.confirmedAmount > 0
+                                ? res.confirmedAmount
+                                : res.amount
+                              ).toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}
+                            </ColumnTd>
+                            <ColumnTd>
+                              {res.type.description.toLocaleUpperCase()}
+                            </ColumnTd>
+                            <ColumnTd>
+                              <Button
+                                onClick={() => {
+                                  setRequestId(res.id);
+                                  setModalView(true);
+                                }}
+                              >
+                                Detalhes
+                              </Button>
+                              <span
+                                style={{
+                                  padding: 10,
+                                  borderRadius: 4,
+                                  marginLeft: 8,
+                                  border: "solid",
+                                  borderWidth: 1,
+                                }}
+                              >
+                                {translateStatus(res.status.description)}
+                              </span>
+                            </ColumnTd>
+                          </Row>
+                        );
+                      })
+                    ) : (
+                      <>
+                        <div>
+                          <span>Não há solicitações para mostrar...</span>
+                        </div>
+                      </>
+                    )}
                   </TableBody>
                 </TableResponsive>
               </Content>
@@ -174,7 +185,12 @@ const Withdrawn_requests: React.FC = () => {
           modal={modalView}
           setModal={setModalView}
         />
-        <TableFooter count={count} take={take} skip={skip} setSkip={setSkip} />
+        <TableFooter
+          count={data.length}
+          take={take}
+          skip={skip}
+          setSkip={setSkip}
+        />
       </Wrapper>
     </LayoutFragment>
   );

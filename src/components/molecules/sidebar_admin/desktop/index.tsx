@@ -47,7 +47,14 @@ const SidebarDesktop: React.FC = () => {
         <Item onClick={() => Router.push('/painel/admin/withdrawn-requests')}>
           <div className="flex items-center">
             <AiTwotoneFileAdd/>
-            <span className="ml-2">Saques</span>
+            <span className="ml-2">Saques investidores</span>
+          </div>
+        </Item>
+
+        <Item onClick={() => Router.push('/painel/admin/withdrawn-requests-consultant')}>
+          <div className="flex items-center">
+            <AiTwotoneFileAdd/>
+            <span className="ml-2">Saques consultores</span>
           </div>
         </Item>
 

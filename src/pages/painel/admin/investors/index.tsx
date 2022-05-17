@@ -40,6 +40,7 @@ export interface User {
   docBackUrl: string;
   consultantId: string;
   isActived: boolean;
+  deleted: boolean;
   isCnh: boolean;
   isEmailSent: boolean;
   isEmailApprovedSent: boolean;
@@ -63,7 +64,7 @@ const Investors: React.FC = () => {
   const take = 10;
   const onLoad = async () => {
     const response = await api.get(
-      `/user/all?take=${take}&skip=${skip*take}&search=${search}`,
+      `/user/all?take=${take}&skip=${skip * take}&search=${search}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -108,57 +109,65 @@ const Investors: React.FC = () => {
                     </Row>
                   </TableHead>
                   <TableBody>
-                    {users.map((res, i) => {
-                      return (
-                        <Row key={i}>
-                          <ColumnTd>{res.name}</ColumnTd>
-                          <ColumnTd>{res.email}</ColumnTd>
-                          <ColumnTd>
-                            {res.wallet[0].amount.toLocaleString(
-                              "pt-BR",
-                              { style: "currency", currency: "BRL" }
-                            )}
-                          </ColumnTd>
-                          <ColumnTd>{res.rateMonth}%</ColumnTd>
-                          <ColumnTd>
-                            <Button
-                              onClick={() => {
-                                setUserId(res.id);
-                                setModalView(true);
-                              }}
-                            >
-                              Detalhes
-                            </Button>
-                            <Button
-                              onClick={() =>
-                                Router.push("extract-investor?id=" + res.id)
-                              }
-                            >
-                              Extrato
-                            </Button>
-                            <Button
-                              onClick={() => {
-                                setUserId(res.id);
-                                setModalEdit(true);
-                              }}
-                            >
-                              Editar
-                            </Button>
-                            <span
-                              style={{
-                                padding: 10,
-                                borderRadius: 4,
-                                marginLeft: 8,
-                                border: "solid",
-                                borderWidth: 1,
-                              }}
-                            >
-                              {res.isActived ? "APROVADO" : "PENDENTE"}
-                            </span>
-                          </ColumnTd>
-                        </Row>
-                      );
-                    })}
+                    {users?.length !== 0 ? (
+                      users.map((res, i) => {
+                        return (
+                          <Row key={i}>
+                            <ColumnTd>{res.name}</ColumnTd>
+                            <ColumnTd>{res.email}</ColumnTd>
+                            <ColumnTd>
+                              {res.wallet[0].amount.toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}
+                            </ColumnTd>
+                            <ColumnTd>{res.rateMonth}%</ColumnTd>
+                            <ColumnTd>
+                              <Button
+                                onClick={() => {
+                                  setUserId(res.id);
+                                  setModalView(true);
+                                }}
+                              >
+                                Detalhes
+                              </Button>
+                              <Button
+                                onClick={() =>
+                                  Router.push("extract-investor?id=" + res.id)
+                                }
+                              >
+                                Extrato
+                              </Button>
+                              <Button
+                                onClick={() => {
+                                  setUserId(res.id);
+                                  setModalEdit(true);
+                                }}
+                              >
+                                Editar
+                              </Button>
+                              <span
+                                style={{
+                                  padding: 10,
+                                  borderRadius: 4,
+                                  marginLeft: 8,
+                                  border: "solid",
+                                  borderWidth: 1,
+                                }}
+                              >
+                                {res.isActived ? "APROVADO" : "PENDENTE"}
+                              </span>
+                            </ColumnTd>
+                          </Row>
+                        );
+                      })
+                    ) : (
+                      <>
+                        <div>
+                          <span>Não há solicitações para mostrar...</span>
+                        </div>
+                      </>
+                    )}
                   </TableBody>
                 </TableResponsive>
               </Content>
@@ -166,7 +175,12 @@ const Investors: React.FC = () => {
           </TableWrapper>
         </Table>
 
-        <TableFooter count={users?.length} take={take} skip={skip} setSkip={setSkip} />
+        <TableFooter
+          count={users?.length}
+          take={take}
+          skip={skip}
+          setSkip={setSkip}
+        />
 
         <ModalViewInvestor
           user={
