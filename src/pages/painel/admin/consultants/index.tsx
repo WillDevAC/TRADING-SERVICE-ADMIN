@@ -23,26 +23,51 @@ import {
   WithdrawButton,
 } from "../../../../components/molecules/table/global";
 import { api } from "../../../../services/api";
+import { data } from "browserslist";
 
+
+interface Consultant {
+  id: string;
+  email: string;
+  name: string;
+  cpf?: string;
+  isActived: boolean;
+  isEmailSent: boolean;
+  isEmailApprovedSent: boolean;
+  isMaster: boolean;
+  countUsers: number;
+  walletUsersAmount: number;
+  wallet: {
+    id: string;
+    amount: number;
+    locked: number;
+  }[];
+}
 const Investors: React.FC = () => {
   const [skip, setSkip] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
-  const [search, setSearch] = useState<string>('')
+  const [search, setSearch] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true)
+  const [consultants, setConsultants] = useState<Consultant[]>([])
   const take = 10
   const onLoad = async () => {
-    const response = await api.get("/consultant/all", {
+    const response = await api.get(`/consultant/all?take=${take}&skip=${skip * take}&search=${search}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
       },
     });
-    console.log('fsddsf',response)
+    if (!response.data?.message) {
+      setConsultants(response.data.data);
+      setCount(Math.ceil(response.data.count / take));
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
     if (typeof window !== undefined) {
       onLoad();
     }
-  }, [typeof window]);
+  }, [typeof window,  skip, search]);
   return (
     <LayoutFragment
       title="Lista de consultores"
@@ -59,28 +84,39 @@ const Investors: React.FC = () => {
                   <TableHead>
                     <Row>
                       <ColumnTh scope="col">Nome</ColumnTh>
-                      <ColumnTh scope="col">email</ColumnTh>
-                      <ColumnTh scope="col">carteira</ColumnTh>
-                      <ColumnTh scope="col">valor disponível para saque</ColumnTh>
+                      <ColumnTh scope="col">Email</ColumnTh>
+                      <ColumnTh scope="col">Carteira</ColumnTh>
+                      <ColumnTh scope="col">Valor disponível para saque</ColumnTh>
                       <ColumnTh scope="col">Convidados</ColumnTh>
                       <ColumnTh scope="col">Ações</ColumnTh>
                     </Row>
                   </TableHead>
                   <TableBody>
-                    <Row>
-                      <ColumnTd>JOSE SANTOS DA ROCHA</ColumnTd>
-                      <ColumnTd>as@gmail.com</ColumnTd>
-                      <ColumnTd>R$ 0.00</ColumnTd>
-                      <ColumnTd>R$ 0.00</ColumnTd>
-                      <ColumnTd>0</ColumnTd>
-                      <ColumnTd>
-                        <Button
-                          onClick={() => Router.push("details-consultant")}
-                        >
-                          Ver detalhes
-                        </Button>
-                      </ColumnTd>
-                    </Row>
+                    {consultants.map((res, i)=>{
+                      return(
+                        <Row key={i}>
+                        <ColumnTd>{res.name}</ColumnTd>
+                        <ColumnTd>{res.email}</ColumnTd>
+                        <ColumnTd>{res.walletUsersAmount.toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}</ColumnTd>
+                        <ColumnTd>         {(!!res.wallet && res.wallet.length !== 0 ? res.wallet[0].amount : 0).toLocaleString("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                              })}</ColumnTd>
+                        <ColumnTd>{res.countUsers}</ColumnTd>
+                        <ColumnTd>
+                          <Button
+                            onClick={() => Router.push("details-consultant?id=" + res.id)}
+                          >
+                            Ver detalhes
+                          </Button>
+                        </ColumnTd>
+                      </Row>
+                      )
+                    })}
+
                   </TableBody>
                 </TableResponsive>
               </Content>
@@ -88,7 +124,7 @@ const Investors: React.FC = () => {
           </TableWrapper>
         </Table>
 
-        <TableFooter count={count} take={take} skip={skip} setSkip={setSkip}/>
+        <TableFooter count={consultants.length} take={take} skip={skip} setSkip={setSkip}/>
       </Wrapper>
     </LayoutFragment>
   );
