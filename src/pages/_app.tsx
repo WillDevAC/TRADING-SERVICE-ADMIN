@@ -37,15 +37,15 @@ function MyApp({ Component, pageProps }) {
       pathname.search("/register") >= 0 &&
       !!asPath && !!pathname
     ) {
-      if (!query.ref && asPath?.search("ref=") < 0) {
-        toast.notify(
-          "Consulte o admin, ele lhe enviará um link de cadastro",
-          {
-            title: "error",
-          }
-        );
-        push("/auth/login");
-      }
+      // if (!query.ref && asPath?.search("ref=") < 0) {
+      //   toast.notify(
+      //     "Consulte o admin, ele lhe enviará um link de cadastro",
+      //     {
+      //       title: "error",
+      //     }
+      //   );
+      //   push("/auth/login");
+      // }
     }
   }, [typeof window, query, asPath]);
 

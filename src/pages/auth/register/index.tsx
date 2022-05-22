@@ -1,20 +1,83 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useForm } from "react-hook-form";
-
-import { Input, Select } from "../../../components/templates/consultant/register/styles";
+import { toast } from "react-nextjs-toast";
+import {
+  Input,
+  Select,
+} from "../../../components/templates/consultant/register/styles";
 
 import InputMask from "react-input-mask";
+import { api } from "../../../services/api";
+import router from "next/router";
+
+interface DataRegister {
+  name: string;
+  email: string;
+  password: string;
+  cpf?: string;
+  rg: string;
+  address: string;
+  addressNumber: string;
+  cep: string;
+  docFrontUrl: string;
+  docBackUrl: string;
+  isCnh: boolean;
+}
 
 const RegisterPage: React.FC = () => {
-  
+  const [loading, setLoading] = useState(false)
+  const handleChangeIMG = async (file: any): Promise<string> => {
+    if (file) {
+      let formData = new FormData();
+      formData.append("img", file);
+      formData.append("folder", "register/docs/consultant/");
+      const res = await api.post("/upload", formData);
+      return String(res.data.url);
+    }
+    return "";
+  };
+
   const { register, handleSubmit } = useForm();
+  
 
   const onSubmit = async (data) => {
-    
-    console.log(data);
+    setLoading(true)
 
+    const dataSent = {
+      name: data.full_name,
+      email: data.email,
+      password: data.password,
+      cpf: data.cpf.replaceAll(".", "").replaceAll("-", ""),
+      rg: data.rg.replaceAll(".", "").replaceAll("-", ""),
+      address: data.address,
+      addressNumber: data.addressNumber,
+      cep: data.cep,
+      isCnh: data.type_document == "cnh" ? true : false,
+      docFrontUrl: await handleChangeIMG(data.front_document[0]),
+      docBackUrl: await handleChangeIMG(data.verse_document[0])
 
+    } as DataRegister;
+   
+    const response = await api.post("/consultant/register",dataSent, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("@token"),
+      },
+    })
+    console.log(response.data)
+    if(!!response.data.isSuccess){
+      toast.notify(response.data?.message, {
+        title: "success",
+      });
+      router.push('/auth/login')
+    }else{
+      toast.notify(response.data?.message, {
+        title: "error",
+      });
+    }
+   
+
+    setLoading(false)
   };
 
   return (
@@ -100,7 +163,7 @@ const RegisterPage: React.FC = () => {
                   RG
                 </label>
                 <InputMask
-                  mask="9999999"
+                  mask="99.999.999-9"
                   name="rg"
                   className="w-full p-2 border border-gray-300 rounded mt-1"
                   {...register("rg")}
@@ -129,6 +192,22 @@ const RegisterPage: React.FC = () => {
                   htmlFor=""
                   className="text-sm font-bold text-gray-600 block"
                 >
+                  Número
+                </label>
+                <input
+                  type="text"
+                  name="endereco"
+                  className="w-full p-2 border border-gray-300 rounded mt-1"
+                  {...register("addressNumber")}
+                  required
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor=""
+                  className="text-sm font-bold text-gray-600 block"
+                >
                   CEP
                 </label>
                 <InputMask
@@ -148,7 +227,11 @@ const RegisterPage: React.FC = () => {
                   Tipo de documento
                 </label>
 
-                <Select id="tipo-documento" {...register("type_document")} required>
+                <Select
+                  id="tipo-documento"
+                  {...register("type_document")}
+                  required
+                >
                   <option value="identidade">Identidade</option>
                   <option value="cnh">CNH</option>
                 </Select>
@@ -163,7 +246,13 @@ const RegisterPage: React.FC = () => {
                     >
                       Frente do documento
                     </label>
-                    <Input type="file" id="frente" {...register("front_document")} accept="image/png, image/gif, image/jpeg" required/>
+                    <Input
+                      type="file"
+                      id="frente"
+                      {...register("front_document")}
+                      accept="image/png, image/gif, image/jpeg"
+                      required
+                    />
                   </div>
                 </div>
               </div>
@@ -177,7 +266,13 @@ const RegisterPage: React.FC = () => {
                     >
                       Verso do documento
                     </label>
-                    <Input type="file" id="verso" {...register("verse_document")} accept="image/png, image/gif, image/jpeg" required/>
+                    <Input
+                      type="file"
+                      id="verso"
+                      {...register("verse_document")}
+                      accept="image/png, image/gif, image/jpeg"
+                      required
+                    />
                   </div>
                 </div>
               </div>

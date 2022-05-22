@@ -22,10 +22,14 @@ interface IProps {
 const modal_define_rendiment: React.FC<IProps> = ({ modal, setModal }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [rate, setRate] = useState<number>(0);
+  const [rateConsultant, setRateConsultant] = useState<number>(0);
+  const [rateConsultantWithdraw, setRateConsultantWithdraw] = useState<number>(0)
   const onSubmit = async () => {
     setLoading(true);
     const response = await api.put("/config-edit", {
       rateMonth: rate,
+      rateConsultant: rateConsultant,
+      rateConsultantWithdraw: rateConsultantWithdraw
     },{
       headers: {
         Authorization: "Bearer " + localStorage.getItem("@token"),
@@ -52,6 +56,8 @@ const modal_define_rendiment: React.FC<IProps> = ({ modal, setModal }) => {
     });
     if (!!response.data?.rateMonth || response.data?.rateMonth == 0) {
       setRate(response.data.rateMonth);
+      setRateConsultant(response.data.rateConsultant)
+      setRateConsultantWithdraw(response.data.rateConsultantWithdraw)
     } else {
       toast.notify(response.data?.message, {
         title: "error",
@@ -74,11 +80,29 @@ const modal_define_rendiment: React.FC<IProps> = ({ modal, setModal }) => {
           <ModalWrapper>
             <ModalBody>
               <div className="pt-5">
-                <Label>Novo rendimento mensal</Label>
+                <Label>Rendimento mensal do cliente</Label>
                 <Input
                   type="number"
                   value={rate}
                   onChange={(e) => setRate(e.target.value)}
+                />
+              </div>
+
+              <div className="pt-5">
+                <Label>Rendimento mensal do consultor</Label>
+                <Input
+                  type="number"
+                  value={rateConsultant}
+                  onChange={(e) => setRateConsultant(e.target.value)}
+                />
+              </div>
+
+              <div className="pt-5">
+                <Label>Rendimento sobre o saque do cliente para o consultor</Label>
+                <Input
+                  type="number"
+                  value={rateConsultantWithdraw}
+                  onChange={(e) => setRateConsultantWithdraw(e.target.value)}
                 />
               </div>
             </ModalBody>
