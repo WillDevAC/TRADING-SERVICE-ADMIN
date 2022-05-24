@@ -22,6 +22,8 @@ interface IProps {
   request?: RequestWithdraw;
 }
 
+import CurrencyInput from 'react-currency-masked-input'
+
 const modal_view_withdrawn: React.FC<IProps> = ({
   modal,
   setModal,
@@ -131,7 +133,7 @@ const modal_view_withdrawn: React.FC<IProps> = ({
 
               <div className="pt-5">
                 <Label>Valor confirmado</Label>
-                <Input
+                <CurrencyInput
                   type="number"
                   onChange={(e) => setConfirmedValue(e.target.value)}
                   disabled={
