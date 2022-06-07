@@ -136,14 +136,6 @@ const Investors: React.FC = () => {
                               >
                                 Extrato
                               </Button>
-                              <Button
-                                onClick={() => {
-                                  setUserId(res.id);
-                                  setModalEdit(true);
-                                }}
-                              >
-                                Editar
-                              </Button>
                               <span
                                 style={{
                                   padding: 10,

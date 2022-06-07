@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import {
   Modal,
   ModalOpacity,
@@ -19,6 +19,17 @@ interface IProps {
 }
 
 const modal_invitie: React.FC<IProps> = ({ modal, setModal }) => {
+  const [copied, setCopied] = useState(false);
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      setValue(
+        "https://goexch-front.vercel.app/register?ref=" +
+          localStorage.getItem("@userId")
+      );
+    }
+  }, [typeof window]);
   return (
     <>
       {modal == true && (
@@ -26,17 +37,23 @@ const modal_invitie: React.FC<IProps> = ({ modal, setModal }) => {
           <ModalOpacity />
           <ModalWrapper>
             <ModalBody>
-                <div className="pt-5">
+              <div className="pt-5">
                 <Label>Seu link de convite: </Label>
-                <Input type="text" name="link" placeholder="http://tradingservice.com.br/register?consultor=21" disabled/>
-
+                <Input
+                  type="text"
+                  name="link"
+                  placeholder={value}
+                  disabled
+                />
               </div>
             </ModalBody>
             <ModalFooter>
               <ButtonDecline onClick={() => setModal(false)}>
                 Fechar
               </ButtonDecline>
-              <ButtonAccept onClick={() => {}}>Copiar</ButtonAccept>
+              <CopyToClipboard text={value} onCopy={() => setCopied(true)}>
+                <ButtonAccept onClick={() => setCopied(true)}>{copied ? 'Copiado' : 'Copiar'}</ButtonAccept>
+              </CopyToClipboard>
             </ModalFooter>
           </ModalWrapper>
         </Modal>

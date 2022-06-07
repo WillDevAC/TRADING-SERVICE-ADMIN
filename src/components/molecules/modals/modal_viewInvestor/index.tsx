@@ -11,13 +11,13 @@ import {
   ButtonAccept,
   Label,
   Input,
-  Wrapper
+  Wrapper,
 } from "../global";
 
 interface IProps {
   modal: boolean;
   setModal: Function;
-  user?:User
+  user?: User;
 }
 
 const modal_editInvestor: React.FC<IProps> = ({ modal, setModal, user }) => {
@@ -34,7 +34,6 @@ const modal_editInvestor: React.FC<IProps> = ({ modal, setModal, user }) => {
 
     return "R$ " + v;
   }
-
 
   return (
     <>
@@ -59,24 +58,40 @@ const modal_editInvestor: React.FC<IProps> = ({ modal, setModal, user }) => {
               </div>
               <div className="pt-5">
                 <Label>Patrimonio total</Label>
-                <Input type="text" disabled value={formatReal(user?.wallet[0]?.amount)} />
+                <Input
+                  type="text"
+                  disabled
+                  value={formatReal(user?.wallet[0]?.amount)}
+                />
               </div>
               <div className="pt-5">
                 <Label>Rendimento mensal</Label>
-                <Input type="text" disabled value={user?.rateMonth+ '%'}/>
+                <Input type="text" disabled value={user?.rateMonth + "%"} />
               </div>
               <div className="pt-5">
                 <Label>Status da conta</Label>
-                <Input type="text" disabled value={!!user?.isActived ? "APROVADA": "PENDENTE"} />
+                <Input
+                  type="text"
+                  disabled
+                  value={!!user?.isActived ? "APROVADA" : "PENDENTE"}
+                />
               </div>
             </ModalBody>
             <ModalFooter>
-              <ButtonAccept onClick={()=>{
-                window.open(user?.docFrontUrl, '_blank')
-              }}>Frente </ButtonAccept>
-                <ButtonAccept onClick={()=>{
-                window.open(user?.docBackUrl, '_blank')
-              }}>Verso</ButtonAccept>
+              <ButtonAccept
+                onClick={() => {
+                  window.open(user?.docFrontUrl, "_blank");
+                }}
+              >
+                Frente{" "}
+              </ButtonAccept>
+              <ButtonAccept
+                onClick={() => {
+                  window.open(user?.docBackUrl, "_blank");
+                }}
+              >
+                Verso
+              </ButtonAccept>
               <ButtonDecline onClick={() => setModal(false)}>
                 Fechar
               </ButtonDecline>

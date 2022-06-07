@@ -41,7 +41,7 @@ const ferraments: React.FC = () => {
               </h3>
             </a>
           </Ferrament>
-          <Ferrament>
+          {/* <Ferrament>
             <a className="flex items-center w-full max-w-xs mx-auto">
               <div className="w-2/12 mr-2">
                 <FaHandsHelping size={40} />
@@ -50,7 +50,7 @@ const ferraments: React.FC = () => {
                 Suporte
               </h3>
             </a>
-          </Ferrament>
+          </Ferrament> */}
 
           <Modal_Invitie modal={modalInvitie} setModal={setModalInvitie} />
           <Modal_Password modal={modalPassword} setModal={setModalPassword}/>

@@ -4,7 +4,7 @@ import { CardRelatoryWrapper, CardContent } from "./styles";
 
 interface IProps {
   title: string;
-  value: number;
+  value: string | number;
   isColor: string;
 }
 

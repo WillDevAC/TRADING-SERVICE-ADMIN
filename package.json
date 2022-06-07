@@ -20,6 +20,7 @@
     "next": "10.0.3",
     "react": "17.0.1",
     "react-chartjs-2": "^4.1.0",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-currency-masked-input": "^2.5.0",
     "react-dom": "17.0.1",
     "react-hook-form": "^7.29.0",
