@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 import LayoutFragment from "../../../../components/layout/consultant";
 import Card_Relatory from "../../../../components/templates/consultant/finances/card";
@@ -140,7 +140,7 @@ const Finances: React.FC = () => {
         />
         <Card_Relatory
           title="Valor disponivel para saque"
-          value={formatReal(data.amount.toFixed(2))}
+          value={formatReal((data.amount - data.lockedAmount).toFixed(2))}
           isColor="border-yellow-900"
         />
         <Card_Relatory

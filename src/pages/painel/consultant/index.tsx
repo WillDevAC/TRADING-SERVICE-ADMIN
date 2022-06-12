@@ -16,9 +16,9 @@ const consultor: React.FC = () => {
     amount: 0,
     invites: 0,
     lockedAmount: 0,
-    walletsUsersAmount: 0
+    walletsUsersAmount: 0,
   } as DataProps);
-  
+
   const onLoad = async () => {
     const response = await api.get("/consultant-info", {
       headers: {
@@ -55,7 +55,7 @@ const consultor: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <CardDetails
             title="Saldo disponivel"
-            value={formatReal(data.amount.toFixed(2))}
+            value={formatReal((data.amount - data.lockedAmount).toFixed(2))}
             icon="/icons/saldo.svg"
           />
           <CardDetails
@@ -68,13 +68,15 @@ const consultor: React.FC = () => {
             value={data.invites}
             icon="/icons/convidados.svg"
           />
-          <CardDetails title="Soma das carteiras dos convidados" value={formatReal(data?.walletsUsersAmount?.toFixed(2))} icon='/icons/saques.svg'/>
+          <CardDetails
+            title="Soma das carteiras dos convidados"
+            value={formatReal(data?.walletsUsersAmount?.toFixed(2))}
+            icon="/icons/saques.svg"
+          />
         </div>
       </LayoutFragment>
     </>
   );
 };
-
-
 
 export default consultor;
