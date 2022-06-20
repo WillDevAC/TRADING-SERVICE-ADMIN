@@ -24,7 +24,7 @@ interface IProps {
 
 import CurrencyInput from 'react-currency-masked-input'
 
-const modal_view_withdrawn: React.FC<IProps> = ({
+const ModalViewWithdrawn: React.FC<IProps> = ({
   modal,
   setModal,
   request,
@@ -162,4 +162,4 @@ const modal_view_withdrawn: React.FC<IProps> = ({
   );
 };
 
-export default modal_view_withdrawn;
+export default ModalViewWithdrawn;

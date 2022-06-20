@@ -11,6 +11,7 @@ interface IProps {
   isBreadcrumb: boolean;
   isBack: boolean;
   urlBack?: string;
+  children: any
 }
 
 import Router from "next/router";

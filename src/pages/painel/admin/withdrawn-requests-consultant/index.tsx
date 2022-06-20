@@ -5,7 +5,7 @@ import LayoutFragment from "../../../../components/layout/admin";
 import TableFooter from "../../../../components/molecules/table/footer";
 import TableHeader from "../../../../components/molecules/table/header";
 
-import ModalViewRequest from "../../../../components/molecules/modals/modal_viewWithdrawnRequest-consultant";
+import ModalViewWithdrawnConsultant from "../../../../components/molecules/modals/modal_viewWithdrawnRequest-consultant";
 
 import {
   Table,
@@ -178,7 +178,7 @@ const Withdrawn_requests: React.FC = () => {
             </BoxTable>
           </TableWrapper>
         </Table>
-        <ModalViewRequest
+        <ModalViewWithdrawnConsultant
           request={
             !!requestId ? data.find((r) => r.id == requestId) : undefined
           }

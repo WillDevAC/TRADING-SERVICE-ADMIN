@@ -25,7 +25,7 @@ interface IProps {
 import CurrencyInput from 'react-currency-masked-input'
 import { RequestWithdrawConsultant } from "../../../../pages/painel/admin/withdrawn-requests-consultant";
 
-const modal_view_withdrawn_consultant: React.FC<IProps> = ({
+const ModalViewWithdrawnConsultant: React.FC<IProps> = ({
   modal,
   setModal,
   request,
@@ -163,4 +163,4 @@ const modal_view_withdrawn_consultant: React.FC<IProps> = ({
   );
 };
 
-export default modal_view_withdrawn_consultant;
+export default ModalViewWithdrawnConsultant;
